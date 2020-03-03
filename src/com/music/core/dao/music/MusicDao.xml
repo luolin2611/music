@@ -78,14 +78,21 @@
 			<result column="dict_img_path" property="dict_img_path" />
 			<result column="status" property="status" />
 		</association>
+		<collection property="musicImgList" resultMap="musicImgList"/>
 	</resultMap>
-
+	
+	<resultMap type="MusicImg" id="musicImgList">
+		<result column="img_id" property="img_id" />
+        <result column="img_path" property="img_path" />
+        <result column="music_id" property="music_id" />
+	</resultMap>
+	
 	<!-- and m.status = '00' and md.status = '00' and su.status = '00' -->
 	<select id="findAllMusic" resultMap="musicList">
-		select m.*,su.*,md.* from
-		music m,sys_user su,music_dict md where
+		select m.*,su.*,md.*,mi.* from
+		music m,sys_user su,music_dict md,music_img mi where
 		m.music_dict_id =
-		md.music_dict_id and m.add_sys_user_id = su.user_id
+		md.music_dict_id and m.add_sys_user_id = su.user_id and  m.music_id = mi.music_id
 		order by
 		m.update_time DESC
 	</select>
@@ -122,6 +129,18 @@
 		update music
 		set music_img_path= #{music_img_path} where music_id = #{music_id}
 	</update>
+	
+	<!-- 查询插入歌曲图片的数量 -->
+	<select id="selectImgsCountByMusicId" parameterType="String" resultType="Integer">
+		select count(*) from music_img where music_id = #{music_id} 
+	</select>
+	
+	<!-- 插入歌曲图片路径 -->
+	<insert id="insertMusicImgsFilePath" parameterType="String">
+		insert into
+		music_img(img_id, img_path, music_id) values(#{img_id},
+		#{img_path}, #{music_id})
+	</insert>
 
 	<!-- 查询歌曲名称是否重复 -->
 	<select id="selectMusicByTitleOrName" parameterType="String" resultType="String">

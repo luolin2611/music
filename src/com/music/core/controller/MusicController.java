@@ -1,6 +1,7 @@
 package com.music.core.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONObject;
 import com.music.comm.DurationUtil;
 import com.music.comm.FileUploadUtil;
+import com.music.comm.UUID;
 import com.music.comm.Util;
 import com.music.core.po.Music;
 import com.music.core.po.MusicDict;
@@ -49,14 +51,15 @@ public class MusicController {
 		return musicService.createDict(music_dict_id, su.getUser_name(), dict_name);
 	}
 
-	@RequestMapping("/musicDict")
+	@RequestMapping("/toMusicDict")
 	public String musicSort(HttpSession session, Model model) {
 		model.addAttribute("musicDictList", musicService.findMusicDictList());
 		return "musicDict";
 	}
 
-	@RequestMapping("/musicManager")
-	public String musicManager(HttpSession session, Model model) {
+	//go to musicManager.jsp
+	@RequestMapping("/toMusicManager")
+	public String toMusicManager(HttpSession session, Model model) {
 		model.addAttribute("musicList", musicService.findAllMusic());
 		model.addAttribute("musicDictList", musicService.findMusicDictList());
 		return "musicManager";
@@ -84,6 +87,9 @@ public class MusicController {
 		String filePath = FileUploadUtil.singleFileUpload(upload_file, dirPath, fileName);
 		String suffix = originalFilename.substring(originalFilename.lastIndexOf(".")+1); //得到后缀名
 		JSONObject object = new JSONObject();
+		object.put("status","fail");
+		object.put("message","服务器不知道怎么了，他报错啦！！");
+		String insertFlag = object.toString();
 		if (!"error".equals(filePath)) {
 			object.put("status", "success");
 			switch (file_type) {
@@ -106,13 +112,13 @@ public class MusicController {
 				musicService.insertMusicTitleImgPath(file_id, filePath);
 				break;
 			case "music_imgs_file":
-				
+				insertFlag = musicService.insertMusicImgsFilePath(UUID.getUUID("Y","45"), filePath, file_id);
 				break;
 			default:
 				break;
 			}
 		}
-		return object.toString();
+		return insertFlag;
 	}
 	
 	@RequestMapping("/addMusic")

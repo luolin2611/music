@@ -1,19 +1,21 @@
 package com.music.core.po;
 
 import java.util.Date;
+import java.util.List;
 
 public class Music {
-	private String music_id;
-	private String author;
-	private String file_duration;
-	private String title;
-	private SysUser sysUser;
-	private String name;
-	private Date update_time;
-	private String music_img_path;
-	private String status;
-	private MusicDict musicDict;
-	private String music_file_path;
+	private String music_id; //musicId
+	private String author; //作者
+	private String file_duration;//歌曲时长
+	private String title;//歌曲title
+	private SysUser sysUser;//后台用户
+	private String name;//歌曲名称
+	private Date update_time;//更新的时间
+	private String music_img_path;//歌曲图片
+	private String status;//歌曲状态
+	private MusicDict musicDict;//歌曲类型
+	private String music_file_path;//歌曲文件路径
+	private List<MusicImg> musicImgList;//歌曲图片
 	
 	public String getMusic_file_path() {
 		return music_file_path;

@@ -12,6 +12,7 @@ public interface MusicService {
 	/** 添加音乐 start 2019年04月16日08:01:33 */
 	public void insertMusicFilePath(String musicId, String musicFilePath, String fileDuration);
 	public void insertMusicTitleImgPath(String musicId, String musicTitleImgPath);
+	public String insertMusicImgsFilePath(String imgId, String imgPath, String musicId);
 	public String insertMusic(Music music);
 	/** 添加音乐end */
 }

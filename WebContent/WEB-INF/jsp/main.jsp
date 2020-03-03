@@ -23,10 +23,10 @@
 				</div>
 				<ul class="layui-nav layui-nav-tree" lay-filter="leftNav">
 				  <li class="layui-nav-item">
-				    <a href="javascript:;" data-url="musicManager.do" data-id='1' data-text="音乐管理"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:5px;">&#xe6fc;</i>音乐管理</a>
+				    <a href="javascript:;" data-url="toMusicManager.do" data-id='1' data-text="音乐管理"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:5px;">&#xe6fc;</i>音乐管理</a>
 				  </li>
 				  <li class="layui-nav-item">
-				    <a href="javascript:;" data-url="musicDict.do" data-id='2' data-text="歌曲类别"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:10px;">&#xe63c;</i>歌曲类别</a>
+				    <a href="javascript:;" data-url="toMusicDict.do" data-id='2' data-text="歌曲类别"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:10px;">&#xe63c;</i>歌曲类别</a>
 				  </li>
 				  <li class="layui-nav-item">
 				    <a href="javascript:;"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:10px;">&#xe620;</i>用户管理</a>

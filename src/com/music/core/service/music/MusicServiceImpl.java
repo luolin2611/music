@@ -76,6 +76,20 @@ public class MusicServiceImpl implements MusicService{
 			musicDao.insertTitleImgFilePath(music_id, music_img_path);
 		}
 	}
+	
+	@Override
+	public String insertMusicImgsFilePath(String imgId, String imgPath, String musicId) {
+		JSONObject object = new JSONObject();
+		object.put("status", "fail");
+		object.put("message", "插入的失败，原因：歌曲相册最多能上传3张！");
+		int count = musicDao.selectImgsCountByMusicId(musicId);
+		if(count < 4) {
+			musicDao.insertMusicImgsFilePath(imgId, imgPath, musicId);
+			object.put("status", "success");
+			object.put("message", "插入成功！");
+		}
+		return object.toString();
+	}
 
 	@Override
 	public String insertMusic(Music music) {

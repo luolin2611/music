@@ -170,12 +170,10 @@
 		  	  	done: function(res, index, upload){
 		  	  		$("#showMusicFileStatus")[0].style.display = '';
 		  	  		document.getElementById("music_file_hide").value = "success";
-		  	  		if(res.status == "success") {
-			  	  		layer.open({
-			  	  		  title: '提示信息',
-			  	  		  content: '上传音乐文件成功！'
-			  	  		});   
-		  	  		}
+		  	  		layer.open({
+		  	  		  title: '提示信息',
+		  	  		  content: '上传音乐文件成功！'
+		  	  		});   
 		  	  	},
 		  	  	error: function(index, upload){
 		  	  		$("#showMusicFileStatus")[0].style.display = "none";
@@ -198,12 +196,10 @@
 		  	  	done: function(res, index, upload){
 		  	  		$("#showTitleFileStatus")[0].style.display = ''; 
 		  	  	 	document.getElementById("title_file_hide").value = "success";
-		  	  		if(res.status == "success") {
-			  	  		layer.open({
-			  	  		  title: '提示信息',
-			  	  		  content: '上传标题图片文件成功！'
-			  	  		});   
-		  	  		}
+		  	  		layer.open({
+		  	  		  title: '提示信息',
+		  	  		  content: '上传标题图片文件成功！'
+		  	  		});   
 		  	  	},
 		  	  	error: function(index, upload){
 		  	  		$("#showTitleFileStatus")[0].style.display = "none";
@@ -231,6 +227,11 @@
 			  	  		  title: '提示信息',
 			  	  		  content: '上传图片相册文件成功！'
 			  	  		});   
+		  	  		} else {
+		  	  			layer.open({
+			  	  		  title: '提示信息',
+			  	  		  content: res.message
+			  	  		});
 		  	  		}
 		  	  	},
 		  	  	error: function(index, upload){
@@ -282,7 +283,7 @@
 								title : '提示信息'
 							},function(index){
 								layer.close(index);
-								location.href="${pageContext.request.contextPath}/musicManager.do";
+								location.href="${pageContext.request.contextPath}/toMusicManager.do";
 							});
 						} else {
 							layer.alert(JSON.stringify(data.message),{
