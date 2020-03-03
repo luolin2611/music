@@ -161,7 +161,8 @@
 		  	  	elem: '#music_file',
 		  	  	url: '${pageContext.request.contextPath}/singleFileUpload.do', 
 		  	  	field:'upload_file',
-		  	  	accept: 'audio',
+		  	  	accept: 'file',
+		  	  	exts:'wav|mp3|flac|ape|m4a',
 		  	 	data: {
 		  	  		'file_id':'<%= musicId%>',
 		  	  		'file_type': 'music_file'
