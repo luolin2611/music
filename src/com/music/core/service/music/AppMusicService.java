@@ -1,5 +1,10 @@
 package com.music.core.service.music;
 
-public interface AppMusicService {
 
+/**
+ * @author luolin
+ * time 2020-03-05 17:29:37
+ */
+public interface AppMusicService {
+	//query all music
 }

@@ -1,24 +1,19 @@
 package com.music.core.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
-import com.music.comm.DurationUtil;
 import com.music.comm.FileUploadUtil;
-import com.music.comm.UUID;
 import com.music.comm.Util;
 import com.music.core.po.Music;
 import com.music.core.po.MusicDict;
@@ -34,7 +29,7 @@ public class MusicController {
 	@ResponseBody
 	public String fileDicImgUpload(HttpServletRequest request, @RequestParam("dictImg") MultipartFile dictImg,
 			@RequestParam("img_id") String img_id) {
-		String dirPath = request.getServletContext().getRealPath("/dict_img/");
+		String dirPath = request.getServletContext().getRealPath("/upload/dict_img/");
 		String res = FileUploadUtil.handleFormUpload(dictImg, dirPath, img_id);
 		JSONObject object = new JSONObject();
 		if (!"error".equals(res)) {
@@ -51,20 +46,6 @@ public class MusicController {
 		return musicService.createDict(music_dict_id, su.getUser_name(), dict_name);
 	}
 
-	@RequestMapping("/toMusicDict")
-	public String musicSort(HttpSession session, Model model) {
-		model.addAttribute("musicDictList", musicService.findMusicDictList());
-		return "musicDict";
-	}
-
-	//go to musicManager.jsp
-	@RequestMapping("/toMusicManager")
-	public String toMusicManager(HttpSession session, Model model) {
-		model.addAttribute("musicList", musicService.findAllMusic());
-		model.addAttribute("musicDictList", musicService.findMusicDictList());
-		return "musicManager";
-	}
-
 	/**
 	 * 单个文件上传
 	 * 
@@ -73,23 +54,26 @@ public class MusicController {
 	 * @param file_id
 	 *            文件ID
 	 * @param file_type
-	 *            上传的文件类型：1.music_file （上传音乐文件）2.title_file（上传标题图片文件）3.music_imgs_file
+	 *            上传的文件类型：1.music_file （上传音乐文件）2.title_file（上传标题图片文件)
 	 * @return
 	 */
 	@RequestMapping("/singleFileUpload")
 	@ResponseBody
 	public String singleFileUpload(HttpServletRequest request, @RequestParam("upload_file") MultipartFile upload_file,
 			@RequestParam("file_id") String file_id, @RequestParam("file_type") String file_type) {
-		String dirPath = request.getServletContext().getRealPath("/" + file_type + "/");
+		String dirPath = request.getServletContext().getRealPath("/upload/" + file_type + "/");
+		System.out.println(request.getContextPath());
+		System.out.println(request.getSession().getServletContext().getRealPath(""));
 		String originalFilename = upload_file.getOriginalFilename();
 		String fileName = originalFilename.substring(0, originalFilename.lastIndexOf("."));//去掉后缀名的文件名称
-		fileName = fileName + "_" + file_id; //文件名 + ID
+		fileName = file_id; //ID
 		String filePath = FileUploadUtil.singleFileUpload(upload_file, dirPath, fileName);
 		String suffix = originalFilename.substring(originalFilename.lastIndexOf(".")+1); //得到后缀名
 		JSONObject object = new JSONObject();
 		object.put("status","fail");
 		object.put("message","服务器不知道怎么了，他报错啦！！");
 		String insertFlag = object.toString();
+		String rootPath =request.getSession().getServletContext().getRealPath(""); //得到根路径
 		if (!"error".equals(filePath)) {
 			object.put("status", "success");
 			switch (file_type) {
@@ -106,13 +90,10 @@ public class MusicController {
 					second = Util.getFlacDuration(filePath);
 				} 
 				String time = Util.secondToTime(second);
-				musicService.insertMusicFilePath(file_id, filePath, time);
+				musicService.insertMusicFilePath(file_id, filePath.split(rootPath)[1], time);
 				break;
 			case "title_file" :
-				musicService.insertMusicTitleImgPath(file_id, filePath);
-				break;
-			case "music_imgs_file":
-				insertFlag = musicService.insertMusicImgsFilePath(UUID.getUUID("Y","45"), filePath, file_id);
+				musicService.insertMusicTitleImgPath(file_id, filePath.split(rootPath)[1]);
 				break;
 			default:
 				break;

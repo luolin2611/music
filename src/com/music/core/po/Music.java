@@ -12,11 +12,17 @@ public class Music {
 	private String name;//歌曲名称
 	private Date update_time;//更新的时间
 	private String music_img_path;//歌曲图片
-	private String status;//歌曲状态
-	private MusicDict musicDict;//歌曲类型
 	private String music_file_path;//歌曲文件路径
-	private List<MusicImg> musicImgList;//歌曲图片
+	private String status;//歌曲状态
+	private Singer singer;//演唱者信息
+	private MusicDict musicDict;//歌曲类型
 	
+	public Singer getSinger() {
+		return singer;
+	}
+	public void setSinger(Singer singer) {
+		this.singer = singer;
+	}
 	public String getMusic_file_path() {
 		return music_file_path;
 	}

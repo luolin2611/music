@@ -133,12 +133,6 @@
 						<input type="hidden" name="title_file_hide" id="title_file_hide"  value="">
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label">图片相册：</label>
-						<button type="button" class="layui-btn" id="imgs_file"><i class="layui-icon">&#xe67c;</i>上传图片相册</button>
-						<span id="showImgsFileStatus" style="display:none">上传成功！</span>
-						<input type="hidden" name="imgs_file_hide" id="imgs_file_hide"  value="">
-					</div>
-					<div class="layui-form-item">
 						<div class="layui-input-block">
 							<button class="layui-btn layui-btn-normal" lay-submit
 								lay-filter="add_music" id="add_music">立即提交</button>
@@ -210,40 +204,6 @@
 		  	  		});   
 		  	  	}
 		  	});
-		  	upload.render({ //上传图片相册文件
-		  	  	elem: '#imgs_file',
-		  	  	url: '${pageContext.request.contextPath}/singleFileUpload.do', 
-		  	  	field:'upload_file',
-		  	  	accept: 'images',
-		  	 	data: {
-		  	  		'file_id':'<%= musicId%>',
-		  	  		'file_type': 'music_imgs_file'
-		  	  	},
-		  	  	done: function(res, index, upload){
-		  	  		$("#showImgsFileStatus")[0].style.display = ''; 
-		  	  		document.getElementById("imgs_file_hide").value = "success";
-		  	  		if(res.status == "success") {
-			  	  		layer.open({
-			  	  		  title: '提示信息',
-			  	  		  content: '上传图片相册文件成功！'
-			  	  		});   
-		  	  		} else {
-		  	  			layer.open({
-			  	  		  title: '提示信息',
-			  	  		  content: res.message
-			  	  		});
-		  	  		}
-		  	  	},
-		  	  	error: function(index, upload){
-		  	  		$("#showImgsFileStatus")[0].style.display = "none";
-		  	  		document.getElementById("imgs_file_hide").value = "";
-		  	  		layer.open({
-		  	  		  title: '错误信息',
-		  	  		  content: '上传图片相册文件错误，请重试！'
-		  	  		});   
-		  	  	}
-		  	});
-		  	
 		  	form.on('submit(add_music)',function(data) {
 		  		console.log(data);
 		  		if(data.field.music_file_hide == '') {

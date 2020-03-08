@@ -61,7 +61,6 @@
 	<script>
 		layui.use([ 'form', 'layedit', 'laydate','jquery' ], function() {
 			var form = layui.form(), layer = layui.layer, $ = layui.jquery;
-
 			//监听提交
 			form.on('submit(login)', function(data) {
 				$.ajax({

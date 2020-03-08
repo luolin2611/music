@@ -26,14 +26,17 @@
 				    <a href="javascript:;" data-url="toMusicManager.do" data-id='1' data-text="音乐管理"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:5px;">&#xe6fc;</i>音乐管理</a>
 				  </li>
 				  <li class="layui-nav-item">
-				    <a href="javascript:;" data-url="toMusicDict.do" data-id='2' data-text="歌曲类别"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:10px;">&#xe63c;</i>歌曲类别</a>
+				    <a href="javascript:;" data-url="toSingerManager.do" data-id='2' data-text="歌手管理"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:10px;">&#xe61c;</i>歌手管理</a>
+				  </li>
+				   <li class="layui-nav-item">
+				    <a href="javascript:;" data-url="toMusicDict.do" data-id='3' data-text="专辑管理"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:10px;">&#xe63c;</i>专辑管理</a>
 				  </li>
 				  <li class="layui-nav-item">
 				    <a href="javascript:;"><i class="layui-icon" style="font-size: 22px;margin-right:10px;padding-top:10px;">&#xe620;</i>用户管理</a>
 				    <dl class="layui-nav-child">
-				      <dd><a href="javascript:;" data-url="toSysUserMessage.do" data-id='3' data-text="个人信息"><span class="l-line"></span>个人信息</a></dd>
+				      <dd><a href="javascript:;" data-url="toSysUserMessage.do" data-id='4' data-text="个人信息"><span class="l-line"></span>个人信息</a></dd>
 				      <c:if test="${sysUser.user_level == '01' }">
-				      	<dd><a href="javascript:;" data-url="toSysUserManger.do" data-id='4' data-text="用户管理"><span class="l-line"></span>添加用户</a></dd>
+				      	<dd><a href="javascript:;" data-url="toSysUserManger.do" data-id='5' data-text="用户管理"><span class="l-line"></span>添加用户</a></dd>
 				    	  </c:if>
 				    </dl>
 				  </li>
