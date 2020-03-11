@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.music.core.dao.music.MusicDao;
 import com.music.core.po.Music;
 import com.music.core.po.MusicDict;
+import com.music.core.po.Singer;
 
 @Service
 public class MusicServiceImpl implements MusicService{
@@ -89,5 +90,10 @@ public class MusicServiceImpl implements MusicService{
 			musicDao.updateMusic(music);
 		}
 		return object.toString();
+	}
+
+	@Override
+	public List<Singer> findAllSinger() {
+		return musicDao.findAllSinger();
 	}
 }

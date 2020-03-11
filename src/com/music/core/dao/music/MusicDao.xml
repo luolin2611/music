@@ -115,6 +115,25 @@
 		m.update_time DESC
 	</select>
 
+
+	<!-- and m.status = '00' and md.status = '00' and su.status = '00' -->
+	<select id="findAllSinger" resultMap="singerList">
+		select * from singer
+		sin,singer_img sim where sin.singer_id=sim.singer_id and sin.status =
+		'00';
+	</select>
+
+	<resultMap type="singer" id="singerList">
+		<result column="singer_id" property="singer_id" />
+		<result column="singer_name" property="singer_name" />
+		<result column="singer_cover_path" property="singer_cover_path" />
+		<result column="add_sys_user_id" property="add_sys_user_id" />
+		<result column="update_time" property="update_time" />
+		<result column="status" property="status" />
+		<collection property="singerImgList"
+			resultMap="singerImgList" />
+	</resultMap>
+
 	<!-- 查询music_id是否存在 -->
 	<select id="selectMusicIdByMusicId" parameterType="String"
 		resultType="String">
@@ -164,7 +183,7 @@
 		#{music.sysUser.user_id}, name = #{music.name},
 		update_time =
 		#{music.update_time}, status = '00', music_dict_id =
-		#{music.musicDict.music_dict_id} where music_id = #{music.music_id}
+		#{music.musicDict.music_dict_id}, singer_id = #{music.singer_id} where music_id = #{music.music_id}
 	</update>
 
 

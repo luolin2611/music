@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.music.core.po.Music;
 import com.music.core.po.MusicDict;
+import com.music.core.po.Singer;
 
 public interface MusicDao {
 	public void insertDictImgDictId(@Param("music_dict_id")String music_dict_id, @Param("dict_img_path")String dict_img_path);
@@ -14,6 +15,7 @@ public interface MusicDao {
 	public void updateMusicDict(MusicDict musicDict);
 	public List<MusicDict> findMusicDictList();
 	public List<Music> findAllMusic();
+	public List<Singer> findAllSinger();
 	/** 添加音乐 start 2019年04月16日07:58:45 */
 	public String selectMusicIdByMusicId(@Param("music_id")String music_id);
 	//插入音乐文件路径

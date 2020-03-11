@@ -46,7 +46,11 @@ public class SingerController {
 		System.out.println(request.getSession().getServletContext().getRealPath(""));
 		String originalFilename = upload_file.getOriginalFilename();
 		String fileName = originalFilename.substring(0, originalFilename.lastIndexOf("."));//去掉后缀名的文件名称
-		fileName = file_id; //ID
+		if("photo_file".equals(file_type)) {
+			fileName = UUID.getUUID("Y","45");
+		}  else {
+			fileName = file_id;
+		}
 		String filePath = FileUploadUtil.singleFileUpload(upload_file, dirPath, fileName);
 		JSONObject object = new JSONObject();
 		object.put("status","fail");
@@ -62,7 +66,7 @@ public class SingerController {
 				break;
 			case "photo_file":
 				SingerImg si = new SingerImg();
-				si.setImg_id(UUID.getUUID("Y","45"));
+				si.setImg_id(fileName); //将新ID作为图片ID
 				si.setImg_path(filePath.split(rootPath)[1]);
 				si.setSinger_id(file_id);
 				si.setStatus("00");

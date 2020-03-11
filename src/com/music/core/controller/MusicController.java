@@ -104,13 +104,16 @@ public class MusicController {
 	
 	@RequestMapping("/addMusic")
 	@ResponseBody
-	public String addMusic(String music_id, String author, String title, String name, String music_dict_id, HttpSession session) {
+	public String addMusic(String music_id, String title, String name, String music_dict_id,String singer_id, HttpSession session) {
 		SysUser su = (SysUser) session.getAttribute("USER_SESSION");
+		String _singerId = singer_id.split("##")[0];
+		String _author = singer_id.split("##")[1];
 		MusicDict musicDict = new MusicDict();
 		musicDict.setMusic_dict_id(music_dict_id);
 		Music music = new Music();
 		music.setMusic_id(music_id);
-		music.setAuthor(author);
+		music.setAuthor(_author);
+		music.setSinger_id(_singerId);
 		music.setTitle(title);
 		music.setSysUser(su);
 		music.setName(name);

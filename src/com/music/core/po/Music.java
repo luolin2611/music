@@ -1,7 +1,6 @@
 package com.music.core.po;
 
 import java.util.Date;
-import java.util.List;
 
 public class Music {
 	private String music_id; //musicId
@@ -15,6 +14,7 @@ public class Music {
 	private String music_file_path;//歌曲文件路径
 	private String status;//歌曲状态
 	private Singer singer;//演唱者信息
+	private String singer_id;
 	private MusicDict musicDict;//歌曲类型
 	
 	public Singer getSinger() {
@@ -88,5 +88,11 @@ public class Music {
 	}
 	public void setMusicDict(MusicDict musicDict) {
 		this.musicDict = musicDict;
+	}
+	public String getSinger_id() {
+		return singer_id;
+	}
+	public void setSinger_id(String singer_id) {
+		this.singer_id = singer_id;
 	}
 }

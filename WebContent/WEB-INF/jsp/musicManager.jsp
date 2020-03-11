@@ -102,11 +102,14 @@
 						</div>
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label">歌手：</label>
+						<label class="layui-form-label">歌手</label>
 						<div class="layui-input-block">
-							<input type="text" name="author" required
-								lay-verify="required" placeholder="请输入歌手名称" autocomplete="off"
-								class="layui-input">
+							<select name="singer_id" lay-verify="required">
+								<option value=""></option>
+								<c:forEach items="${singerList}" var="singer" >
+									<option value="${singer.singer_id}##${singer.singer_name}">${singer.singer_name}</option>
+								</c:forEach>
+							</select>
 						</div>
 					</div>
 					<div class="layui-form-item">
@@ -232,7 +235,7 @@
 					dataType : 'json',
 					data : {//请求的数据，
 						'music_id':'<%= musicId%>',
-						'author': data.field.author,
+						'singer_id': data.field.singer_id,
 						'title': data.field.title,
 						'name': data.field.name,
 						'music_dict_id': data.field.music_dict_id

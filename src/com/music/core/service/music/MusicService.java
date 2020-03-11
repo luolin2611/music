@@ -3,6 +3,7 @@ package com.music.core.service.music;
 import java.util.List;
 import com.music.core.po.Music;
 import com.music.core.po.MusicDict;
+import com.music.core.po.Singer;
 
 public interface MusicService {
 	public void insertDictImgDictId(String music_dict_id, String dict_img_path);
@@ -14,4 +15,5 @@ public interface MusicService {
 	public void insertMusicTitleImgPath(String musicId, String musicTitleImgPath);
 	public String insertMusic(Music music);
 	/** 添加音乐end */
+	List<Singer> findAllSinger();
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.music.core.dao.sys_user.SysUserDao;
 import com.music.core.po.Music;
+import com.music.core.po.Singer;
 import com.music.core.po.SysUser;
 import com.music.core.service.music.MusicService;
 
@@ -37,6 +38,7 @@ public class MainController {
 	@RequestMapping("/toMusicManager")
 	public String toMusicManager(HttpSession session, Model model) {
 		model.addAttribute("musicList", musicService.findAllMusic());
+		model.addAttribute("singerList", musicService.findAllSinger());
 		model.addAttribute("musicDictList", musicService.findMusicDictList());
 		return "musicManager";
 	}

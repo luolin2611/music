@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -52,6 +51,7 @@ public class AppMusicController {
 		String path = request.getParameter("music_file_path");
 		String rootPath =request.getSession().getServletContext().getRealPath(""); //得到根路径
 	    File file = new File(rootPath+"/"+path);
+	    System.out.println(rootPath+"/"+path);
 	    byte[] body = null;
 	    InputStream is = new FileInputStream(file);
 	    body = new byte[is.available()];
