@@ -1,13 +1,10 @@
 package com.music.core.service.singer;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.music.core.dao.singer.SingerDao;
-import com.music.core.po.MusicDict;
 import com.music.core.po.Singer;
 import com.music.core.po.SingerImg;
 
