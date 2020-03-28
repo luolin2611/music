@@ -1,0 +1,217 @@
+1.checkbox按钮的使用
+<input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose">
+
+form.on('checkbox(allChoose)', function(data) {
+		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+		child.each(function(index, item) {
+			item.checked = data.elem.checked;
+		});
+		form.render('checkbox');
+	});
+
+2.返回对象集合
+	public List<SysUser> findAllSysUser();
+	
+	<resultMap id="sysUserList" type="sysUser">
+	        <result column="user_id" property="user_id" />
+	        <result column="user_name" property="user_name" />
+	        <result column="password" property="password" />
+	        <result column="update_time" property="update_time" />
+	        <result column="status" property="status" />
+	        <result column="user_level" property="user_level" />
+	        <result column="real_name" property="real_name" />
+	        <result column="add_user_name" property="add_user_name" />
+	    </resultMap>
+	
+		 <select id="findAllSysUser" resultMap="sysUserList">
+		    select * from sys_user
+	    </select>
+	
+3.el格式化时间
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:formatDate value="${sysUser.update_time}" pattern="yyyy-MM-dd HH:mm:ss" />
+
+
+4.按钮选择
+	<li class="layui-nav-item"><a href="javascript:;" class="logout_btn">退出</a></li>
+
+	$('.logout_btn').click(function() {
+		return false;
+	})
+	
+	
+5.
+	dialog.confirm({
+		message:'您确定退出登录吗？',
+		success:function(){
+			layer.msg('确定')
+		},
+		cancel:function(){
+			ayer.msg('取消')
+		}
+	})
+	
+6.for循环
+	<c:forEach items="${suList}" var="sysUser" >
+		<tr>
+			<td>${sysUser.user_name}</td>
+			<td>${sysUser.real_name}</td>
+	</c:forEach>
+
+7.条件判断
+	<td>
+		<c:if test="${sysUser.status == '00' }">在用</c:if>
+		<c:if test="${sysUser.status == '01' }">禁用</c:if>
+	</td>
+
+
+8.跳转到指定界面
+	location.href="${pageContext.request.contextPath}/toMainPage.action";
+
+
+9.el类似于switch的使用
+<c:choose>  
+	<c:when test="${sysUser.user_level=='01'}">  
+		所有者  
+    </c:when>  
+    <c:when test="${sysUser.user_level=='02'}">  
+       拥有上传、删除歌曲  
+    </c:when>  
+    <c:when test="${sysUser.user_level=='03'}">  
+       拥有上传歌曲  
+    </c:when>  
+    <c:when test="${sysUser.user_level=='04'}">  
+       拥有删除歌曲  
+    </c:when>  
+    <c:when test="${sysUser.user_level=='05'}">  
+       游客模式，只能浏览 
+    </c:when>  
+</c:choose>  	
+
+9.清空表单
+<form class="layui-form" id="add_sys_user">
+
+$("#add_sys_user")[0].reset();//清空表单
+form.render();//刷新表单
+
+
+10.隐藏域
+<input type="hidden" id="fileIds"  value="">
+
+11.打印日志
+console.log('文件上传中');
+
+12.弹出toast
+layer.msg('上传完毕');
+
+13.记住在JS弹出Java时需要打上 单引号 “ ‘’ ”
+	'img_id':'<%= imgId%>'
+
+14.一对一 和 返回一对一 的混合使用
+查询多表里面的对象
+	<resultMap type="Music" id="musicList">
+		<result column="music_id" property="music_id" />
+		<result column="author" property="author" />
+		<result column="file_duration" property="file_duration" />
+		<result column="title" property="title" />
+		<result column="name" property="name" />
+		<result column="update_time" property="update_time" />
+		<result column="music_img_path" property="music_img_path" />
+		<result column="status" property="status" />
+		<association property="sysUser" javaType="sysUser">
+			<result column="add_sys_user_id" property="user_id" />
+			<result column="user_name" property="user_name" />
+			<result column="password" property="password" />
+			<result column="update_time" property="update_time" />
+			<result column="status" property="status" />
+			<result column="user_level" property="user_level" />
+			<result column="real_name" property="real_name" />
+			<result column="add_user_name" property="add_user_name" />
+		</association>
+		<association property="musicDict" javaType="musicDict">
+			<result column="music_dict_id" property="music_dict_id" />
+			<result column="dict_name" property="dict_name" />
+			<result column="update_time" property="update_time" />
+			<result column="add_user_name" property="add_user_name" />
+			<result column="dict_img_path" property="dict_img_path" />
+			<result column="status" property="status" />
+		</association>
+	</resultMap>
+
+	<!-- and m.status = '00' and md.status = '00' and su.status = '00' -->
+	<select id="findAllMusic" resultMap="musicList">
+		select m.*,su.*,md.* from music m,sys_user su,music_dict md where
+		m.music_dict_id = md.music_dict_id and m.add_sys_user_id = su.user_id
+		order by
+		m.update_time
+	</select>
+
+
+15.计数方法
+	<select id="countMusicNumForDict" parameterType="String" resultType="String">
+		select count(*) from music where music_dict_id = #{music_dict_id}
+	</select>
+
+	<resultMap id="musicDictList" type="musicDict">
+		<result column="music_dict_id" property="music_dict_id" />
+		<result column="dict_name" property="dict_name" />
+		<result column="update_time" property="update_time" />
+		<result column="add_user_name" property="add_user_name" />
+		<result column="dict_img_path" property="dict_img_path" />
+		<result column="status" property="status" />
+		<association column="music_dict_id" property="music_num" javaType="String" select="countMusicNumForDict"/>
+	</resultMap>
+
+	<select id="findMusicDictList" resultMap="musicDictList">
+		select * from music_dict where status = '00' order by update_time DESC
+	</select>
+
+16.form提交的其他方式
+			form.on('submit(formDemo)', function(data) {
+				$.post("${pageContext.request.contextPath }/addSysUser.action",
+						$("#add_sys_user").serialize(), function(data) {
+							if(data.status === 'success') {
+								layer.alert(JSON.stringify(data.message), {
+									title : '提示信息'
+								})
+								$("#add_sys_user")[0].reset();//清空表单
+								form.render();//刷新表单
+							} else {
+								layer.alert(JSON.stringify(data.message), {
+									title : '提示信息'
+								})
+							}
+						});
+				return false;
+			});
+
+17.打开上传文件夹
+
+
+18.layer.alert 回调事件
+		layer.alert("添加音乐类别成功！",{
+			title : '提示信息'
+		},function(index){
+			layer.close(index);
+			location.href="${pageContext.request.contextPath}/musicDict.do";
+		});
+
+19.表单隐藏域、表单校验
+<input type="hidden" name="title_file_hide" id="title_file_hide"  value="">
+
+if(data.field.music_file_hide == '') {
+	layer.alert("你是不是忘了上传歌曲文件？骚年，别着急啊！",{
+		title : '提示信息'
+	});
+	return false;
+}
+
+document.getElementById("title_file_hide").value = "";//更改隐藏域的值
+
+20.TextMate 缩进 快捷键
+ Command + [ ;
+
+21.如果使用在Dao中使用 public void updateMusic(@Param("music")Music music);
+   在XML中写入#{music.author}, title = #{music.title},
+
+
